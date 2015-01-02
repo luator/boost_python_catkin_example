@@ -12,6 +12,8 @@ find_package(catkin REQUIRED COMPONENTS
 ## System dependencies are found with CMake's conventions
 find_package(Boost REQUIRED COMPONENTS python)
 
+find_package(PythonLibs REQUIRED) # sets ${PYTHON_INCLUDE_DIRS}
+
 
 ## Uncomment this if the package has a setup.py. This macro ensures
 ## modules and global scripts declared therein get installed
@@ -46,7 +48,7 @@ catkin_package(
 include_directories(
   ${catkin_INCLUDE_DIRS}
   ${Boost_INCLUDE_DIRS}
-  "/usr/include/python2.7" #TODO: let cmake find the path
+  ${PYTHON_INCLUDE_DIRS}
 )
 
 add_library(mycpplib SHARED
