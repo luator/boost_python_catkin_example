@@ -9,8 +9,8 @@ void hello()
 }
 
 
-
-BOOST_PYTHON_MODULE(libmycpplib) // name has to match with the name in CMakeLists `add_library` + prefix 'lib'
+// name has to match with the name in CMakeLists `add_library` + prefix 'lib'
+BOOST_PYTHON_MODULE(libmycpplib)
 {
    using namespace boost::python;
    def("hello", hello);
