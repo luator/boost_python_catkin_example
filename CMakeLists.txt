@@ -18,7 +18,7 @@ find_package(PythonLibs REQUIRED) # sets ${PYTHON_INCLUDE_DIRS}
 ## Uncomment this if the package has a setup.py. This macro ensures
 ## modules and global scripts declared therein get installed
 ## See http://ros.org/doc/api/catkin/html/user_guide/setup_dot_py.html
-# catkin_python_setup()
+catkin_python_setup() # this sets up the path /devel/lib/python2.7/dist-packages/boostpy_test
 
 
 
@@ -53,6 +53,10 @@ include_directories(
 
 add_library(mycpplib SHARED
   src/mycpplib.cpp
+)
+# change output directory, so python can find the module
+set_target_properties(mycpplib PROPERTIES
+  LIBRARY_OUTPUT_DIRECTORY ${CATKIN_DEVEL_PREFIX}/${CATKIN_PACKAGE_PYTHON_DESTINATION}
 )
 
 target_link_libraries(mycpplib
