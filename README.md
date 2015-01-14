@@ -35,8 +35,9 @@ Configure cmake
           ${catkin_LIBRARIES}
           ${Boost_LIBRARIES}
         )
-        # change output directory, so python can find the module
+        # change output directory, so python can find the module and avoid the 'lib'-prefix
         set_target_properties(mycpplib PROPERTIES
+          PREFIX "" 
           LIBRARY_OUTPUT_DIRECTORY ${CATKIN_DEVEL_PREFIX}/${CATKIN_PACKAGE_PYTHON_DESTINATION}
         )
     The last command is important because it will change the destination of the compiled library
@@ -54,11 +55,31 @@ After you compiled the package, you should be able to use the wrapped module in 
         cpp.hello()
 
 
+Boost::Python and ROS::NodeHandle
+---------------------------------
+
+When using ROS, there is one important thing to keep in mind: Assume you have a ROS node written
+in Python, that uses some C++ code via Boost::Python.
+If the C++ code needs a `ros::NodeHandle`, for example to fetch some parameters from the
+parameter server, it will crash, because the `rospy.init_node()' does **not** initialize roscpp!
+
+To get around this, you need the _MoveIt ROS planning interface_ which is available in the ROS
+repos (`sudo apt-get install ros-groovy-moveit-ros-planning-interface`). Once installed, add
+the following code to your Python node:
+
+        from moveit_ros_planning_interface._moveit_roscpp_initializer import roscpp_init
+        roscpp_init('node_name', [])
+        
+Now everything should work fine.
+
 References
 ----------
 
 Some references that were helpful for me in one or the other way:
 
+ * This page, that I unfortunatly only found after I figured most of it out by myself, should
+   explain everything...
+   http://wiki.ros.org/ROS/Tutorials/Using%20a%20C%2B%2B%20class%20in%20Python
  * Boost::Python documentation: http://www.boost.org/doc/libs/1_57_0/libs/python/doc/index.html
  * Using Boost::Python with cmake: https://www.preney.ca/paul/archives/107
  * https://github.com/ethz-asl/Schweizer-Messer/wiki/Adding-boost::python-exports-to-your-ROS-package

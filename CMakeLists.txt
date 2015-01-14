@@ -56,6 +56,7 @@ add_library(mycpplib SHARED
 )
 # change output directory, so python can find the module
 set_target_properties(mycpplib PROPERTIES
+  PREFIX ""
   LIBRARY_OUTPUT_DIRECTORY ${CATKIN_DEVEL_PREFIX}/${CATKIN_PACKAGE_PYTHON_DESTINATION}
 )
 
