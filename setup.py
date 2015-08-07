@@ -5,7 +5,7 @@ from catkin_pkg.python_setup import generate_distutils_setup
 
 # fetch values from package.xml
 setup_args = generate_distutils_setup(
-    packages=['boostpy_test'],
+    packages=['boost_python_catkin_example'],
     package_dir={'': 'src'},
 )
 

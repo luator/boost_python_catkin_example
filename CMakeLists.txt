@@ -1,25 +1,20 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(boostpy_test)
+project(boost_python_catkin_example)
 
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
-find_package(catkin REQUIRED COMPONENTS
-  roscpp
-  rospy
-)
+find_package(catkin REQUIRED)
 
 ## System dependencies are found with CMake's conventions
 find_package(Boost REQUIRED COMPONENTS python)
-
-find_package(PythonLibs REQUIRED) # sets ${PYTHON_INCLUDE_DIRS}
+find_package(PythonLibs 2.7 REQUIRED) # sets ${PYTHON_INCLUDE_DIRS}
 
 
 ## Uncomment this if the package has a setup.py. This macro ensures
 ## modules and global scripts declared therein get installed
 ## See http://ros.org/doc/api/catkin/html/user_guide/setup_dot_py.html
 catkin_python_setup() # this sets up the path /devel/lib/python2.7/dist-packages/boostpy_test
-
 
 
 ###################################
@@ -54,7 +49,8 @@ include_directories(
 add_library(mycpplib SHARED
   src/mycpplib.cpp
 )
-# change output directory, so python can find the module
+# change output directory, so python can find the module, and set prefix to ""
+# to omit the default "lib".
 set_target_properties(mycpplib PROPERTIES
   PREFIX ""
   LIBRARY_OUTPUT_DIRECTORY ${CATKIN_DEVEL_PREFIX}/${CATKIN_PACKAGE_PYTHON_DESTINATION}
