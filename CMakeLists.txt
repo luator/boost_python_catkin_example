@@ -59,4 +59,14 @@ set_target_properties(mycpplib PROPERTIES
 target_link_libraries(mycpplib
   ${catkin_LIBRARIES}
   ${Boost_LIBRARIES}
+
 )
+
+install(TARGETS mycpplib
+  ARCHIVE DESTINATION ${CATKIN_PACKAGE_PYTHON_DESTINATION}
+  LIBRARY DESTINATION ${CATKIN_PACKAGE_PYTHON_DESTINATION}
+)
+
+file(GLOB py_files "scripts/*.py")
+install(PROGRAMS ${py_files}
+        DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION})
