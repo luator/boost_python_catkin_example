@@ -32,9 +32,6 @@ catkin_package(
 #  DEPENDS system_lib
 )
 
-catkin_install_python(PROGRAMS scripts/use_cpplib.py
-                      DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
-
 ###########
 ## Build ##
 ###########
@@ -61,11 +58,18 @@ set_target_properties(mycpplib PROPERTIES
 target_link_libraries(mycpplib
   ${catkin_LIBRARIES}
   ${Boost_LIBRARIES}
-
 )
+
+
+#############
+## Install ##
+#############
 
 install(TARGETS mycpplib
   ARCHIVE DESTINATION ${CATKIN_PACKAGE_PYTHON_DESTINATION}
   LIBRARY DESTINATION ${CATKIN_PACKAGE_PYTHON_DESTINATION}
 )
+
+catkin_install_python(PROGRAMS scripts/use_cpplib.py
+                      DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
 
