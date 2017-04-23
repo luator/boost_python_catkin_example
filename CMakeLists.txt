@@ -16,7 +16,6 @@ find_package(PythonLibs 2.7 REQUIRED) # sets ${PYTHON_INCLUDE_DIRS}
 ## See http://ros.org/doc/api/catkin/html/user_guide/setup_dot_py.html
 catkin_python_setup() # this sets up the path /devel/lib/python2.7/dist-packages/boostpy_test
 
-
 ###################################
 ## catkin specific configuration ##
 ###################################
@@ -32,6 +31,9 @@ catkin_package(
 #  CATKIN_DEPENDS roscpp rospy
 #  DEPENDS system_lib
 )
+
+catkin_install_python(PROGRAMS scripts/use_cpplib.py
+                      DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
 
 ###########
 ## Build ##
@@ -59,4 +61,11 @@ set_target_properties(mycpplib PROPERTIES
 target_link_libraries(mycpplib
   ${catkin_LIBRARIES}
   ${Boost_LIBRARIES}
+
 )
+
+install(TARGETS mycpplib
+  ARCHIVE DESTINATION ${CATKIN_PACKAGE_PYTHON_DESTINATION}
+  LIBRARY DESTINATION ${CATKIN_PACKAGE_PYTHON_DESTINATION}
+)
+
