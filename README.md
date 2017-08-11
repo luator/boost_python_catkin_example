@@ -18,34 +18,40 @@ Configure cmake
 
  1. You need Boost::Python and the path to the python include dirs:
 
-        find_package(Boost REQUIRED COMPONENTS python)
-        find_package(PythonLibs REQUIRED) # sets ${PYTHON_INCLUDE_DIRS}
+    ```cmake
+    find_package(Boost REQUIRED COMPONENTS python)
+    find_package(PythonLibs REQUIRED) # sets ${PYTHON_INCLUDE_DIRS}
+    ```
 
     Make sure to add them to the include directories:
 
-        include_directories(
-          ${catkin_INCLUDE_DIRS}
-          ${Boost_INCLUDE_DIRS}
-          ${PYTHON_INCLUDE_DIRS}
-        )
+    ```cmake
+    include_directories(
+      ${catkin_INCLUDE_DIRS}
+      ${Boost_INCLUDE_DIRS}
+      ${PYTHON_INCLUDE_DIRS}
+    )
+    ```
 
- 2. uncomment `catkin_python_setup()`. This will set up the destination path of
+ 2. Uncomment `catkin_python_setup()`. This will set up the destination path of
     the python module. You also need a basic _setup.py_ in the packages root
     directory.
- 3. add a library:
+ 3. Add a library:
 
-        add_library(mycpplib SHARED
-          src/mycpplib.cpp
-        )
-        target_link_libraries(mycpplib
-          ${catkin_LIBRARIES}
-          ${Boost_LIBRARIES}
-        )
-        # change output directory, so python can find the module and avoid the 'lib'-prefix
-        set_target_properties(mycpplib PROPERTIES
-          PREFIX "" 
-          LIBRARY_OUTPUT_DIRECTORY ${CATKIN_DEVEL_PREFIX}/${CATKIN_PACKAGE_PYTHON_DESTINATION}
-        )
+    ```cmake
+    add_library(mycpplib SHARED
+      src/mycpplib.cpp
+    )
+    target_link_libraries(mycpplib
+      ${catkin_LIBRARIES}
+      ${Boost_LIBRARIES}
+    )
+    # change output directory, so python can find the module and avoid the 'lib'-prefix
+    set_target_properties(mycpplib PROPERTIES
+      PREFIX "" 
+      LIBRARY_OUTPUT_DIRECTORY ${CATKIN_DEVEL_PREFIX}/${CATKIN_PACKAGE_PYTHON_DESTINATION}
+    )
+    ```
 
     The last command is important because it will change the destination of the
     compiled library from `/catkin_ws/devel/lib/` to
@@ -59,8 +65,10 @@ Use the module
 After you compiled the package, you should be able to use the wrapped module in
 Python:
 
-    import boostpy_test.libmycpplib as cpp
-    cpp.hello()
+```python
+import boostpy_test.libmycpplib as cpp
+cpp.hello()
+```
 
 
 Boost::Python and ROS::NodeHandle
@@ -77,8 +85,10 @@ available in the ROS repos
 (`sudo apt-get install ros-groovy-moveit-ros-planning-interface`).
 Once installed, add the following code to your Python node:
 
-    from moveit_ros_planning_interface._moveit_roscpp_initializer import roscpp_init
-    roscpp_init('node_name', [])
+```python
+from moveit_ros_planning_interface._moveit_roscpp_initializer import roscpp_init
+roscpp_init('node_name', [])
+```
 
 Now everything should work fine.
 
