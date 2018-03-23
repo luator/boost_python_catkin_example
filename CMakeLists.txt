@@ -40,6 +40,17 @@ target_link_libraries(mycpplib
 )
 
 
+add_executable(use_pylib
+  src/use_pylib.cpp
+)
+
+target_link_libraries(use_pylib
+  ${catkin_LIBRARIES}
+  ${Boost_LIBRARIES}
+  ${PYTHON_LIBRARIES}
+)
+
+
 #############
 ## Install ##
 #############

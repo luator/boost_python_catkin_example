@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package>
   <name>boost_python_catkin_example</name>
-  <version>1.0.0</version>
+  <version>1.1.0</version>
   <description>
     A minimal example package on how to use Boost::Python with catkin.
   </description>
